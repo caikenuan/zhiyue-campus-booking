@@ -119,7 +119,7 @@ npm run dev
 
 1.  打开微信开发者工具，选择“导入项目”。
 2.  目录选择仓库中的 `frontend/mini-program`。
-3.  AppID 可选择“测试号”（项目已配置 `touristappid`）。
+3.  项目已配置课程演示用的测试号 AppID；如果工具提示 AppID 无效，在导入时选择自己的“测试号”，并把新 AppID 填到本地 `project.private.config.json`（该文件已被 Git 忽略，不要提交）。
 4.  进入“详情 → 本地设置”，勾选**不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书**。
 5.  确认后端已启动，然后点击“编译”。
 6.  使用学生账号登录（见 5.5）。
