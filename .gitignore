@@ -12,3 +12,8 @@ database/data/
 frontend/mini-program/project.private.config.json
 frontend/mini-program/.wechat/
 ~$*
+# 本地课程材料，不提交到仓库
+/*.pptx
+/*.docx
+/*.pdf
+/*.html
