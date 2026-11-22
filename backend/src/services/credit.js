@@ -1,7 +1,7 @@
 import { pool } from '../db.js';
 import { RULES } from '../config.js';
 import { AppError, ErrorCodes } from '../utils/errors.js';
-import { formatDateTime } from '../utils/time.js';
+import { addDays, formatDateTime, parseDate } from '../utils/time.js';
 import { writeLog } from './audit.js';
 import { getManagedResourceIds } from './availability.js';
 
@@ -268,6 +268,17 @@ export async function getUtilization(actor, fromText, toText) {
   if (!['VENUE_ADMIN', 'COLLEGE_ADMIN'].includes(actor.role)) {
     throw new AppError(403, ErrorCodes.FORBIDDEN, '没有查看统计的权限');
   }
+  const from = parseDate(fromText);
+  const to = parseDate(toText);
+  if (!from || !to || from > to) {
+    throw new AppError(
+      400,
+      ErrorCodes.VALIDATION_ERROR,
+      '日期范围格式应为 YYYY-MM-DD，且开始日期不能晚于结束日期',
+    );
+  }
+  // 日期范围按自然日包含首尾两天，查询上界取结束日期的次日 00:00。
+  const endExclusive = addDays(to, 1);
   let resourceWhere = '';
   const resourceParams = [];
   if (actor.role === 'VENUE_ADMIN') {
@@ -288,11 +299,9 @@ export async function getUtilization(actor, fromText, toText) {
       WHERE status IN ('PENDING', 'CHECKED_IN', 'COMPLETED')
         AND start_at >= ? AND start_at < ?
       GROUP BY resource_id`,
-    [fromText, toText],
+    [formatDateTime(from), formatDateTime(endExclusive)],
   );
-  const start = new Date(`${fromText} 00:00:00`.replace(' ', 'T'));
-  const end = new Date(`${toText} 00:00:00`.replace(' ', 'T'));
-  const days = Math.max(1, Math.round((end.getTime() - start.getTime()) / 86_400_000));
+  const days = Math.max(1, Math.round((endExclusive.getTime() - from.getTime()) / 86_400_000));
   const bookedByResource = new Map(rows.map((row) => [Number(row.resource_id), row]));
 
   return resources.map((resource) => {
