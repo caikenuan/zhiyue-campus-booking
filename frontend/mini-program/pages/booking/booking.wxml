@@ -1,0 +1,47 @@
+<view class="page">
+  <view class="card">
+    <view class="title">{{resource.name || '场地'}}</view>
+    <view class="muted" style="margin-top: 10rpx;">
+      {{resource.building}} {{resource.room}} · {{dateLabel}} {{date}}
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">开始时间</view>
+    <view class="chip-grid">
+      <view
+        wx:for="{{startOptions}}"
+        wx:key="value"
+        class="chip {{startIndex === index ? 'chip-active' : ''}}"
+        bindtap="setStart"
+        data-index="{{index}}"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">使用时长</view>
+    <view class="chip-grid">
+      <view
+        wx:for="{{durationOptions}}"
+        wx:key="minutes"
+        class="chip {{durationIndex === index ? 'chip-active' : ''}}"
+        bindtap="setDuration"
+        data-index="{{index}}"
+      >{{item.label}}</view>
+    </view>
+    <view class="muted" style="margin-top: 14rpx;">单笔最长 4 小时，30 分钟起约</view>
+  </view>
+
+  <view class="summary-card">
+    <view class="muted">预约信息</view>
+    <view class="summary-text">{{summary}}</view>
+  </view>
+
+  <button
+    class="btn-primary submit-btn"
+    bindtap="submit"
+    loading="{{submitting}}"
+    disabled="{{submitting || !summary}}"
+  >确认预约</button>
+</view>

@@ -1,0 +1,93 @@
+.status-card {
+  border-radius: 22rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.status-PENDING {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.status-CHECKED_IN {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.status-COMPLETED,
+.status-CANCELLED {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+}
+
+.status-RELEASED,
+.status-REJECTED {
+  background: linear-gradient(135deg, #b91c1c, #ef4444);
+}
+
+.status-name {
+  font-size: 38rpx;
+  font-weight: 700;
+}
+
+.status-tip {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  opacity: 0.92;
+}
+
+.row {
+  display: flex;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f1f5f9;
+  font-size: 27rpx;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row-label {
+  width: 150rpx;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.row-value {
+  flex: 1;
+  color: #111827;
+  word-break: break-all;
+}
+
+.qr-card {
+  text-align: center;
+}
+
+.qr-image {
+  width: 360rpx;
+  margin: 10rpx auto;
+  display: block;
+}
+
+.qr-tip {
+  font-size: 23rpx;
+  line-height: 1.7;
+}
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+  margin-bottom: 20rpx;
+}
+
+.action-list button {
+  width: 100%;
+}
+
+.rule-tip {
+  color: #9ca3af;
+  font-size: 22rpx;
+  line-height: 1.7;
+  padding: 0 8rpx 30rpx;
+}

@@ -1,0 +1,65 @@
+<view class="page">
+  <view wx:if="{{loading && !booking.id}}" class="empty">加载中...</view>
+
+  <block wx:if="{{booking.id}}">
+    <view class="status-card status-{{booking.status}}">
+      <view class="status-name">{{booking.statusLabel}}</view>
+      <view class="status-tip">{{statusTip}}</view>
+    </view>
+
+    <view class="card">
+      <view class="row">
+        <view class="row-label">场地</view>
+        <view class="row-value">{{booking.resourceName}}</view>
+      </view>
+      <view class="row">
+        <view class="row-label">位置</view>
+        <view class="row-value">{{booking.building}} {{booking.room}}</view>
+      </view>
+      <view class="row">
+        <view class="row-label">时间</view>
+        <view class="row-value">{{booking.startText}} - {{booking.endText}}（{{booking.durationLabel}}）</view>
+      </view>
+      <view class="row">
+        <view class="row-label">预约号</view>
+        <view class="row-value">#{{booking.id}}</view>
+      </view>
+      <view class="row">
+        <view class="row-label">创建时间</view>
+        <view class="row-value">{{booking.createdAtText}}</view>
+      </view>
+      <view wx:if="{{booking.checkedInText}}" class="row">
+        <view class="row-label">签到时间</view>
+        <view class="row-value">{{booking.checkedInText}}</view>
+      </view>
+      <view wx:if="{{booking.cancelReason}}" class="row">
+        <view class="row-label">取消原因</view>
+        <view class="row-value">{{booking.cancelReason}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{qr}}" class="card qr-card">
+      <view class="section-title" style="text-align: center;">签到二维码</view>
+      <image class="qr-image" src="{{qr}}" mode="widthFix" />
+      <view class="muted qr-tip">
+        到场地后向管理员出示二维码签到，也可以在下方点「自助签到」。开始后 15 分钟内有效。
+      </view>
+    </view>
+
+    <view class="action-list">
+      <button
+        wx:if="{{canCheckin}}"
+        class="btn-primary"
+        bindtap="checkin"
+        loading="{{submitting}}"
+      >自助签到</button>
+      <button wx:if="{{canRenew}}" class="btn-ghost" bindtap="renew">续约相邻时段</button>
+      <button wx:if="{{canCancel}}" class="btn-danger" bindtap="cancel">取消预约</button>
+      <button wx:if="{{booking.status === 'RELEASED'}}" class="btn-ghost" bindtap="goCredit">去信用页申诉</button>
+    </view>
+
+    <view class="rule-tip">
+      签到窗口：开始后 15 分钟内。超时未签到，系统自动释放场地并记一次违约；30 天内累计 3 次将暂停预约 7 天。
+    </view>
+  </block>
+</view>

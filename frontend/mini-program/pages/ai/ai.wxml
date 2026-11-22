@@ -1,0 +1,71 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-title">AI 找位助手</view>
+    <view class="hero-tip">
+      用一句话描述时间、人数和场地类型，帮你找最合适的空位。找不到会退回普通搜索。
+    </view>
+  </view>
+
+  <view class="card">
+    <textarea
+      class="ai-input"
+      value="{{message}}"
+      maxlength="500"
+      auto-height
+      placeholder="例如：明天下午 3 点，4 个人，找个研讨室开 1 小时"
+      bindinput="onInput"
+    />
+    <view class="example-list">
+      <view
+        wx:for="{{examples}}"
+        wx:key="*this"
+        class="example-chip"
+        bindtap="useExample"
+        data-text="{{item}}"
+      >{{item}}</view>
+    </view>
+    <button
+      class="btn-primary"
+      style="margin-top: 24rpx;"
+      bindtap="ask"
+      loading="{{loading}}"
+    >帮我找空位</button>
+  </view>
+
+  <block wx:if="{{loaded}}">
+    <view class="card interpretation-card">
+      <view class="between">
+        <view class="section-title" style="margin-bottom: 0;">需求理解</view>
+        <view class="tag tag-blue">{{sourceLabel}}</view>
+      </view>
+      <view class="interpretation-text">{{interpretationText}}</view>
+      <view class="muted" style="margin-top: 10rpx;">
+        未配置大模型时使用内置规则解析，演示环境同样可用。
+      </view>
+    </view>
+
+    <view wx:if="{{note}}" class="card">
+      <view class="muted">{{note}}</view>
+    </view>
+
+    <view wx:for="{{candidates}}" wx:key="resourceId" class="card candidate-card">
+      <view class="between">
+        <view class="candidate-name">{{item.resourceName}}</view>
+        <view class="tag tag-green">{{item.typeLabel}}</view>
+      </view>
+      <view class="muted" style="margin-top: 10rpx;">
+        {{item.building}} {{item.room}} · 可容纳 {{item.capacity}} 人
+      </view>
+      <view class="candidate-time">{{item.timeText}}</view>
+      <view class="candidate-reason">{{item.reason}}</view>
+      <view class="candidate-actions">
+        <button class="btn-ghost btn-small" bindtap="goVenue" data-index="{{index}}">看场地</button>
+        <button class="btn-primary btn-small" bindtap="goBooking" data-index="{{index}}">去预约</button>
+      </view>
+    </view>
+  </block>
+
+  <view class="rule-tip">
+    AI 只负责理解你的需求，实际空位由系统实时查询数据库，避免推荐已被占用的时段。
+  </view>
+</view>

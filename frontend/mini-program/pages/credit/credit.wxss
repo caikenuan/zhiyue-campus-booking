@@ -1,0 +1,60 @@
+.score-card {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  color: #ffffff;
+  margin-bottom: 22rpx;
+  text-align: center;
+}
+
+.score-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.score-value {
+  font-size: 96rpx;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.score-user {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.suspended-card {
+  background: #fef2f2;
+  border: 1rpx solid #fecaca;
+}
+
+.rule-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #f8fafc;
+  color: #374151;
+}
+
+.rule-strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+.record-row,
+.released-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #f1f5f9;
+}
+
+.record-title {
+  font-size: 27rpx;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6rpx;
+}

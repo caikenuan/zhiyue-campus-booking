@@ -1,0 +1,97 @@
+.hero {
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  border-radius: 24rpx;
+  padding: 36rpx 30rpx;
+  color: #ffffff;
+  margin-bottom: 22rpx;
+}
+
+.hero-title {
+  font-size: 38rpx;
+  font-weight: 800;
+}
+
+.hero-tip {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+.ai-input {
+  width: 100%;
+  min-height: 150rpx;
+  background: #f8fafc;
+  border-radius: 16rpx;
+  padding: 22rpx;
+  font-size: 27rpx;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.example-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-top: 20rpx;
+}
+
+.example-chip {
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 24rpx;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  line-height: 1.5;
+}
+
+.interpretation-card {
+  background: #eff6ff;
+  border: 1rpx solid #bfdbfe;
+}
+
+.interpretation-text {
+  margin-top: 16rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1d4ed8;
+  line-height: 1.6;
+}
+
+.candidate-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #111827;
+}
+
+.candidate-time {
+  margin-top: 16rpx;
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #047857;
+}
+
+.candidate-reason {
+  margin-top: 8rpx;
+  color: #4b5563;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.candidate-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14rpx;
+  margin-top: 18rpx;
+}
+
+.candidate-actions button {
+  margin: 0;
+}
+
+.rule-tip {
+  color: #9ca3af;
+  font-size: 22rpx;
+  line-height: 1.7;
+  padding: 6rpx 8rpx 30rpx;
+}

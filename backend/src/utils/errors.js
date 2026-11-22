@@ -1,0 +1,28 @@
+export class AppError extends Error {
+  constructor(status, code, message, details = undefined) {
+    super(message);
+    this.name = 'AppError';
+    this.status = status;
+    this.code = code;
+    this.details = details;
+  }
+}
+
+export const ErrorCodes = {
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  NOT_FOUND: 'NOT_FOUND',
+  CONFLICT: 'CONFLICT',
+  GRANULARITY_INVALID: 'GRANULARITY_INVALID',
+  DURATION_EXCEEDED: 'DURATION_EXCEEDED',
+  BOOKING_WINDOW_INVALID: 'BOOKING_WINDOW_INVALID',
+  CROSS_DAY_INVALID: 'CROSS_DAY_INVALID',
+  SLOT_CONFLICT: 'SLOT_CONFLICT',
+  MAINTENANCE_WINDOW: 'MAINTENANCE_WINDOW',
+  USER_SUSPENDED: 'USER_SUSPENDED',
+  CHECKIN_EXPIRED: 'CHECKIN_EXPIRED',
+  INVALID_QR: 'INVALID_QR',
+  INVALID_STATE: 'INVALID_STATE',
+  RESOURCE_CLOSED: 'RESOURCE_CLOSED',
+};

@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/venue/venue",
+    "pages/booking/booking",
+    "pages/bookings/bookings",
+    "pages/detail/detail",
+    "pages/checkin/checkin",
+    "pages/credit/credit",
+    "pages/ai/ai",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "智约",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f7fb"
+  },
+  "tabBar": {
+    "color": "#6b7280",
+    "selectedColor": "#2563eb",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "找场地"
+      },
+      {
+        "pagePath": "pages/bookings/bookings",
+        "text": "我的预约"
+      },
+      {
+        "pagePath": "pages/ai/ai",
+        "text": "AI 找位"
+      },
+      {
+        "pagePath": "pages/credit/credit",
+        "text": "信用"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

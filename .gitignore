@@ -9,4 +9,6 @@ build/
 .vscode/
 .tools/
 database/data/
+frontend/mini-program/project.private.config.json
+frontend/mini-program/.wechat/
 ~$*

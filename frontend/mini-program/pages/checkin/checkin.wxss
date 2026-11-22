@@ -1,0 +1,47 @@
+.scan-card {
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  color: #ffffff;
+  margin-bottom: 22rpx;
+}
+
+.scan-title {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.scan-tip {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.scan-btn {
+  margin-top: 28rpx;
+  background: #ffffff;
+  color: #1d4ed8;
+}
+
+.pending-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #f1f5f9;
+}
+
+.pending-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6rpx;
+}
+
+.rule-tip {
+  color: #9ca3af;
+  font-size: 22rpx;
+  line-height: 1.7;
+  padding: 6rpx 8rpx 30rpx;
+}

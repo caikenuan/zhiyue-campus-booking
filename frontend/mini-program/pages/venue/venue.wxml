@@ -1,0 +1,77 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+
+  <block wx:else>
+    <view class="card">
+      <view class="between">
+        <view class="title">{{resource.name}}</view>
+        <view class="tag tag-blue">{{resource.typeLabel}}</view>
+      </view>
+      <view class="muted" style="margin-top: 12rpx;">
+        {{resource.building}} · {{resource.room}} · 可容纳 {{resource.capacity}} 人
+      </view>
+      <view class="muted" style="margin-top: 8rpx;">
+        开放时间 {{resource.openFrom}} - {{resource.openTo}}
+      </view>
+      <view wx:if="{{resource.description}}" class="desc">{{resource.description}}</view>
+    </view>
+
+    <view wx:if="{{maintenance.length > 0}}" class="card warning-card">
+      <view class="section-title" style="color: #c2410c;">维护时段</view>
+      <view wx:for="{{maintenance}}" wx:key="id" class="maintenance-row">
+        <text>{{item.startAtText}} - {{item.endAtText}}</text>
+        <text class="muted">{{item.reason || '维护'}}</text>
+      </view>
+      <view class="muted" style="margin-top: 8rpx;">维护时段内不可预约</view>
+    </view>
+
+    <view class="date-tabs">
+      <view
+        wx:for="{{dateTabs}}"
+        wx:key="value"
+        class="date-tab {{date === item.value ? 'date-tab-active' : ''}}"
+        bindtap="setDate"
+        data-date="{{item.value}}"
+      >
+        <view class="date-label">{{item.label}}</view>
+        <view class="date-value">{{item.short}}</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="between" style="margin-bottom: 18rpx;">
+        <view class="section-title" style="margin-bottom: 0;">空闲时段</view>
+        <view class="muted">30 分钟一档</view>
+      </view>
+
+      <scroll-view scroll-x class="slot-scroll" enhanced show-scrollbar="{{false}}">
+        <view class="slot-strip">
+          <view
+            wx:for="{{slots}}"
+            wx:key="start"
+            class="slot-block {{item.available ? 'slot-free' : 'slot-busy'}}"
+          >{{item.startTime}}</view>
+        </view>
+      </scroll-view>
+
+      <view wx:if="{{segments.length === 0}}" class="empty">当天没有连续空档，换个日期试试</view>
+
+      <view wx:for="{{segments}}" wx:key="start" class="segment-row">
+        <view>
+          <view class="segment-time">{{item.startTime}} - {{item.endTime}}</view>
+          <view class="muted">连续空闲，最长可约 {{item.minutes}} 分钟</view>
+        </view>
+        <button
+          class="btn-primary btn-small"
+          bindtap="goBooking"
+          data-start="{{item.start}}"
+          data-end="{{item.end}}"
+        >预约</button>
+      </view>
+    </view>
+
+    <view class="rule-tip">
+      规则：30 分钟起约，单笔最长 4 小时，仅可预约今天和明天。
+    </view>
+  </block>
+</view>

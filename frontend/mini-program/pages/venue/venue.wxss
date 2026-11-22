@@ -1,0 +1,106 @@
+.desc {
+  margin-top: 18rpx;
+  padding: 18rpx;
+  background: #f8fafc;
+  border-radius: 14rpx;
+  color: #4b5563;
+  font-size: 25rpx;
+  line-height: 1.7;
+}
+
+.warning-card {
+  background: #fff7ed;
+  border: 1rpx solid #fed7aa;
+}
+
+.maintenance-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 25rpx;
+  padding: 10rpx 0;
+}
+
+.date-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.date-tab {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 18rpx;
+  padding: 20rpx 0;
+  text-align: center;
+  border: 2rpx solid transparent;
+  box-shadow: 0 4rpx 18rpx rgba(15, 23, 42, 0.05);
+}
+
+.date-tab-active {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.date-label {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.date-value {
+  font-size: 22rpx;
+  color: #6b7280;
+  margin-top: 4rpx;
+}
+
+.slot-scroll {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.slot-strip {
+  display: inline-flex;
+  gap: 10rpx;
+  padding-bottom: 6rpx;
+}
+
+.slot-block {
+  width: 86rpx;
+  padding: 14rpx 0;
+  border-radius: 12rpx;
+  text-align: center;
+  font-size: 21rpx;
+}
+
+.slot-free {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.slot-busy {
+  background: #f3f4f6;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.segment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-top: 1rpx solid #f1f5f9;
+}
+
+.segment-time {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6rpx;
+}
+
+.rule-tip {
+  color: #9ca3af;
+  font-size: 22rpx;
+  line-height: 1.7;
+  padding: 10rpx 8rpx 30rpx;
+}

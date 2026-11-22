@@ -1,0 +1,22 @@
+{
+  "name": "zhiyue-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "智约校园共享空间预约平台 - 后端 API",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "test": "node --test tests/core.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "qrcode": "^1.5.4",
+    "zod": "^3.24.1"
+  }
+}

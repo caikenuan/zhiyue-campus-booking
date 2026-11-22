@@ -1,0 +1,46 @@
+.status-tabs {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.status-tab-row {
+  display: inline-flex;
+  gap: 14rpx;
+  padding-bottom: 6rpx;
+}
+
+.status-tab {
+  padding: 14rpx 28rpx;
+  border-radius: 999rpx;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 25rpx;
+  box-shadow: 0 4rpx 14rpx rgba(15, 23, 42, 0.05);
+}
+
+.status-tab-active {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.booking-card {
+  padding-bottom: 20rpx;
+}
+
+.booking-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #111827;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14rpx;
+  margin-top: 20rpx;
+}
+
+.actions button {
+  margin: 0;
+}

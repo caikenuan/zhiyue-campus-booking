@@ -1,0 +1,70 @@
+<view class="page">
+  <view class="header">
+    <view>
+      <view class="hello">你好，{{user.name || '同学'}}</view>
+      <view class="muted">{{todayText}} · 今天想约哪里？</view>
+    </view>
+    <view class="avatar">{{avatarText}}</view>
+  </view>
+
+  <view class="ai-banner" bindtap="goAi">
+    <view>
+      <view class="ai-title">AI 找位助手</view>
+      <view class="ai-sub">说一句“明天下午三点，两个人，安静点”</view>
+    </view>
+    <view class="ai-arrow">→</view>
+  </view>
+
+  <view class="quick-row">
+    <view class="quick-item" bindtap="goCheckin">
+      <view class="quick-icon">扫</view>
+      <view class="quick-text">扫码签到</view>
+    </view>
+    <view class="quick-item" bindtap="goBookings">
+      <view class="quick-icon">约</view>
+      <view class="quick-text">我的预约</view>
+    </view>
+    <view class="quick-item" bindtap="goCredit">
+      <view class="quick-icon">信</view>
+      <view class="quick-text">信用分</view>
+    </view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title">可预约场地</view>
+    <view class="muted">{{filtered.length}} 个场地</view>
+  </view>
+
+  <scroll-view scroll-x class="filter-scroll" enhanced show-scrollbar="{{false}}">
+    <view class="chip-row" style="flex-wrap: nowrap;">
+      <view
+        wx:for="{{types}}"
+        wx:key="value"
+        class="filter-chip {{activeType === item.value ? 'filter-chip-active' : ''}}"
+        bindtap="setType"
+        data-type="{{item.value}}"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+  <view wx:elif="{{filtered.length === 0}}" class="empty">当前分类下没有场地</view>
+
+  <view
+    wx:for="{{filtered}}"
+    wx:key="id"
+    class="card venue-card"
+    bindtap="goVenue"
+    data-id="{{item.id}}"
+  >
+    <view class="between">
+      <view class="venue-name">{{item.name}}</view>
+      <view class="tag tag-blue">{{item.typeLabel}}</view>
+    </view>
+    <view class="venue-meta">{{item.building}} · {{item.room}} · 可容纳 {{item.capacity}} 人</view>
+    <view class="between venue-footer">
+      <view class="muted">开放 {{item.openFrom}} - {{item.openTo}}</view>
+      <view class="venue-link">查看空档 →</view>
+    </view>
+  </view>
+</view>

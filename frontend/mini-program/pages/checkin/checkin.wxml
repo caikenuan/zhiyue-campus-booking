@@ -1,0 +1,48 @@
+<view class="page">
+  <view class="scan-card">
+    <view class="scan-title">扫码签到</view>
+    <view class="scan-tip">扫描场地二维码，或输入管理员提供的签到码</view>
+    <button class="btn-primary scan-btn" bindtap="scan">打开相机扫码</button>
+  </view>
+
+  <view class="card">
+    <view class="section-title">手动输入签到码</view>
+    <input
+      class="input"
+      value="{{token}}"
+      placeholder="例如 demo-qr-token-0001"
+      bindinput="onTokenInput"
+    />
+    <button
+      class="btn-ghost"
+      style="margin-top: 20rpx;"
+      bindtap="manualSubmit"
+      loading="{{submitting}}"
+    >提交签到码</button>
+    <view class="muted" style="margin-top: 14rpx;">
+      演示环境可以直接使用种子数据里的签到码。
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">我的待签到预约</view>
+    <view wx:if="{{loading}}" class="empty">加载中...</view>
+    <view wx:elif="{{pending.length === 0}}" class="empty">暂无待签到预约</view>
+    <view wx:for="{{pending}}" wx:key="id" class="pending-row">
+      <view>
+        <view class="pending-name">{{item.resourceName}}</view>
+        <view class="muted">{{item.timeText}} · {{item.building}} {{item.room}}</view>
+      </view>
+      <button
+        class="btn-primary btn-small"
+        bindtap="selfCheckin"
+        data-id="{{item.id}}"
+        loading="{{submitting}}"
+      >签到</button>
+    </view>
+  </view>
+
+  <view class="rule-tip">
+    签到窗口为预约开始后 15 分钟内。开始前或超时后无法签到，超时预约会被系统自动释放并记违约。
+  </view>
+</view>

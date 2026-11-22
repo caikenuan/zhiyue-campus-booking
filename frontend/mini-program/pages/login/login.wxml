@@ -1,0 +1,36 @@
+<view class="login-page">
+  <view class="hero">
+    <view class="brand">智约</view>
+    <view class="hero-title">校园共享空间预约</view>
+    <view class="hero-sub">查空档 · 约场地 · 扫码签到 · 信用结算</view>
+  </view>
+
+  <view class="card login-card">
+    <view class="field">
+      <view class="field-label">账号 / 学号</view>
+      <input class="input" value="{{studentNo}}" placeholder="请输入学号" bindinput="onStudentNo" />
+    </view>
+    <view class="field">
+      <view class="field-label">密码</view>
+      <input class="input" value="{{password}}" password placeholder="请输入密码" bindinput="onPassword" />
+    </view>
+    <button class="btn-primary login-btn" loading="{{loading}}" disabled="{{loading}}" bindtap="submit">登录</button>
+  </view>
+
+  <view class="card demo-card">
+    <view class="section-title">演示学生账号</view>
+    <view class="demo-row" bindtap="useDemo" data-no="2024030202003">
+      <text>蔡珂暖</text>
+      <text class="demo-code">2024030202003 / 123456</text>
+    </view>
+    <view class="demo-row" bindtap="useDemo" data-no="2024030202107">
+      <text>史曼琪</text>
+      <text class="demo-code">2024030202107 / 123456</text>
+    </view>
+    <view class="demo-row" bindtap="useDemo" data-no="2024000001">
+      <text>测试学生</text>
+      <text class="demo-code">2024000001 / 123456</text>
+    </view>
+    <view class="muted demo-note">管理员账号请使用 Vue 管理后台登录。</view>
+  </view>
+</view>
