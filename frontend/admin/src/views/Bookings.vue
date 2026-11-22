@@ -13,6 +13,9 @@
         <el-select v-model="filters.status" clearable placeholder="全部状态" style="width: 150px" @change="load">
           <el-option v-for="(label, value) in STATUS_LABELS" :key="value" :label="label" :value="value" />
         </el-select>
+        <el-select v-model="filters.resourceId" clearable placeholder="全部场地" style="width: 180px" @change="load">
+          <el-option v-for="item in resources" :key="item.id" :label="item.name" :value="item.id" />
+        </el-select>
         <el-date-picker
           v-model="filters.date"
           type="date"
@@ -86,7 +89,8 @@ import { shortDateTime } from '../utils/format';
 
 const loading = ref(false);
 const bookings = ref([]);
-const filters = reactive({ status: '', date: '' });
+const resources = ref([]);
+const filters = reactive({ status: '', resourceId: '', date: '' });
 const detailVisible = ref(false);
 const current = ref(null);
 
@@ -96,6 +100,7 @@ async function load() {
     const { data } = await api.get('/admin/bookings', {
       params: {
         status: filters.status || undefined,
+        resourceId: filters.resourceId || undefined,
         date: filters.date || undefined,
       },
     });
@@ -107,8 +112,18 @@ async function load() {
   }
 }
 
+async function loadResources() {
+  try {
+    const { data } = await api.get('/admin/resources');
+    resources.value = data.items;
+  } catch (error) {
+    ElMessage.error(errorMessage(error));
+  }
+}
+
 function resetFilters() {
   filters.status = '';
+  filters.resourceId = '';
   filters.date = '';
   load();
 }
@@ -157,5 +172,8 @@ async function review(row, decision) {
   }
 }
 
-onMounted(load);
+onMounted(() => {
+  loadResources();
+  load();
+});
 </script>
