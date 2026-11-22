@@ -493,6 +493,45 @@ test('E-03 申诉通过后爽约记录撤销、信用分恢复、停权解除', 
   assert.equal(again.data.error.code, 'INVALID_STATE');
 });
 
+test('E-03b 申诉驳回后爽约记录保持有效，信用分不再变化', async () => {
+  const submit = await api('/credit/appeals', {
+    method: 'POST',
+    token: studentToken,
+    body: { bookingId: bookings.noShow2, reason: '当天临时有事未能到场' },
+  });
+  assert.equal(submit.status, 201);
+  assert.equal(submit.data.appeal.status, 'PENDING');
+
+  const appealId = Number(submit.data.appeal.id);
+  const handle = await api(`/admin/appeals/${appealId}/handle`, {
+    method: 'POST',
+    token: adminToken,
+    body: { decision: 'REJECTED', result: '未提供有效证明，维持爽约记录' },
+  });
+  assert.equal(handle.status, 200);
+  assert.equal(handle.data.appeal.status, 'REJECTED');
+
+  const credit = await api('/credit/me', { token: studentToken });
+  assert.equal(credit.status, 200);
+  assert.equal(credit.data.noShowCount, 2);
+  assert.equal(credit.data.user.creditScore, 80);
+  assert.equal(credit.data.user.suspendedUntil, null);
+
+  const [records] = await pool.query(
+    "SELECT status FROM credit_records WHERE user_id = ? AND booking_id = ? AND type = 'NO_SHOW'",
+    [testUserId, bookings.noShow2],
+  );
+  assert.equal(records[0].status, 'VALID');
+
+  const again = await api(`/admin/appeals/${appealId}/handle`, {
+    method: 'POST',
+    token: adminToken,
+    body: { decision: 'APPROVED', result: '重复处理' },
+  });
+  assert.equal(again.status, 409);
+  assert.equal(again.data.error.code, 'INVALID_STATE');
+});
+
 test('E-02 开始后 15 分钟内管理员辅助签到，写入 checkins 与操作日志', async () => {
   await shiftBookingToPast(bookings.assisted, 5);
 
