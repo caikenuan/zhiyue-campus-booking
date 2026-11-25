@@ -8,6 +8,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "db:init": "node scripts/init-db.js",
+    "db:import": "node scripts/import-cloud.js",
     "test": "node --test --test-concurrency=1 \"tests/*.test.js\""
   },
   "dependencies": {
