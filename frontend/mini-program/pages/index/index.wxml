@@ -57,6 +57,13 @@
     bindtap="goVenue"
     data-id="{{item.id}}"
   >
+    <image
+      wx:if="{{item.imageUrl}}"
+      class="venue-image"
+      src="{{item.imageUrl}}"
+      mode="aspectFill"
+      lazy-load
+    />
     <view class="between">
       <view class="venue-name">{{item.name}}</view>
       <view class="tag tag-blue">{{item.typeLabel}}</view>

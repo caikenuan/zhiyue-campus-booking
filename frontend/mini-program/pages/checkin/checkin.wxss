@@ -32,6 +32,12 @@
   border-top: 1rpx solid #f1f5f9;
 }
 
+.pending-actions {
+  display: flex;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
 .pending-name {
   font-size: 28rpx;
   font-weight: 700;

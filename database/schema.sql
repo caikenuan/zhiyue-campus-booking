@@ -43,6 +43,8 @@ CREATE TABLE resources (
   open_to TIME NOT NULL DEFAULT '22:00:00',
   status ENUM('OPEN', 'CLOSED') NOT NULL DEFAULT 'OPEN',
   description VARCHAR(255) NULL,
+  -- 场地图片只存对象存储 URL，不存二进制
+  image_url VARCHAR(500) NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   KEY idx_resources_type (type),
@@ -118,6 +120,8 @@ CREATE TABLE checkins (
   method ENUM('QR', 'ASSISTED') NOT NULL,
   operator_id BIGINT UNSIGNED NULL,
   checked_in_at DATETIME NOT NULL,
+  -- 签到照片只存对象存储 URL；未拍照时为空
+  photo_url VARCHAR(500) NULL,
   PRIMARY KEY (id),
   UNIQUE KEY uk_checkins_booking (booking_id),
   KEY idx_checkins_operator (operator_id),

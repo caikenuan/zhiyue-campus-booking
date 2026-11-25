@@ -1,4 +1,4 @@
-const { get, post, showError } = require('../../utils/request');
+const { get, post, upload, showError } = require('../../utils/request');
 const { ensureLogin } = require('../../utils/util');
 
 Page({
@@ -81,6 +81,40 @@ Page({
       .finally(function () {
         that.setData({ submitting: false });
       });
+  },
+
+  photoCheckin(event) {
+    const that = this;
+    const id = event.currentTarget.dataset.id;
+    if (this.data.submitting) return;
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['camera'],
+      sizeType: ['compressed'],
+      success: function (result) {
+        const file = result.tempFiles && result.tempFiles[0];
+        if (!file) return;
+        that.setData({ submitting: true });
+        upload(file.tempFilePath)
+          .then(function (data) {
+            return post('/bookings/' + id + '/checkin', { photoUrl: data.url });
+          })
+          .then(function (data) {
+            wx.showToast({ title: '签到成功', icon: 'success' });
+            that.loadPending();
+            setTimeout(function () {
+              wx.navigateTo({ url: '/pages/detail/detail?id=' + data.booking.id });
+            }, 700);
+          })
+          .catch(function (error) {
+            showError(error);
+          })
+          .finally(function () {
+            that.setData({ submitting: false });
+          });
+      },
+    });
   },
 
   selfCheckin(event) {

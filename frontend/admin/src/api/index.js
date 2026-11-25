@@ -2,8 +2,10 @@ import axios from 'axios';
 
 const TOKEN_KEY = 'zhiyue_admin_token';
 
+// 默认同源 /api（Nginx 反代）；静态托管（Cloudflare Pages 等）时
+// 构建前设置 VITE_API_BASE=https://your-api.onrender.com/api
 export const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE || '/api',
   timeout: 15000,
 });
 

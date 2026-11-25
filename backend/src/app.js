@@ -8,9 +8,14 @@ import authRoutes from './routes/auth.js';
 import bookingRoutes from './routes/bookings.js';
 import creditRoutes from './routes/credit.js';
 import resourceRoutes from './routes/resources.js';
+import uploadRoutes from './routes/uploads.js';
+import { config } from './config.js';
+import { localUploadRoot } from './services/storage.js';
 
 const app = express();
 
+// 反向代理后让 req.protocol / req.ip 反映真实客户端
+app.set('trust proxy', 1);
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
 
@@ -37,6 +42,15 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/credit', creditRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/uploads', uploadRoutes);
+
+// 本地驱动：直接托管上传目录；S3 驱动下不会写入该目录。
+if (config.storage.driver !== 's3') {
+  app.use('/uploads', express.static(localUploadRoot(), {
+    maxAge: '30d',
+    immutable: true,
+  }));
+}
 
 app.use(notFound);
 app.use(errorHandler);

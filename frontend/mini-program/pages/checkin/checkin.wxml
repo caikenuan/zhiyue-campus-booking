@@ -33,12 +33,20 @@
         <view class="pending-name">{{item.resourceName}}</view>
         <view class="muted">{{item.timeText}} · {{item.building}} {{item.room}}</view>
       </view>
-      <button
-        class="btn-primary btn-small"
-        bindtap="selfCheckin"
-        data-id="{{item.id}}"
-        loading="{{submitting}}"
-      >签到</button>
+      <view class="pending-actions">
+        <button
+          class="btn-ghost btn-small"
+          bindtap="photoCheckin"
+          data-id="{{item.id}}"
+          loading="{{submitting}}"
+        >拍照签到</button>
+        <button
+          class="btn-primary btn-small"
+          bindtap="selfCheckin"
+          data-id="{{item.id}}"
+          loading="{{submitting}}"
+        >签到</button>
+      </view>
     </view>
   </view>
 

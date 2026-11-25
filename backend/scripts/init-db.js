@@ -18,6 +18,7 @@ async function main() {
     user: config.dbRoot.user,
     password: config.dbRoot.password,
     multipleStatements: true,
+    ssl: config.db.ssl,
   });
 
   const database = config.db.database;
@@ -28,10 +29,16 @@ async function main() {
     `CREATE DATABASE IF NOT EXISTS \`${database}\`
        CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`,
   );
-  for (const host of ['localhost', '127.0.0.1']) {
-    await root.query(`CREATE USER IF NOT EXISTS '${escapeLiteral(user)}'@'${host}' IDENTIFIED BY '${password}'`);
-    await root.query(`ALTER USER '${escapeLiteral(user)}'@'${host}' IDENTIFIED BY '${password}'`);
-    await root.query(`GRANT ALL PRIVILEGES ON \`${database}\`.* TO '${escapeLiteral(user)}'@'${host}'`);
+  // 本机默认同时兼容 localhost 与 127.0.0.1；部署到云数据库或容器时，
+  // 用 DB_USER_HOSTS 指定来源，例如 DB_USER_HOSTS=%（容器）或 10.0.0.5（固定 IP）。
+  const userHosts = (process.env.DB_USER_HOSTS || '%')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+  for (const host of userHosts) {
+    await root.query(`CREATE USER IF NOT EXISTS '${escapeLiteral(user)}'@'${escapeLiteral(host)}' IDENTIFIED BY '${password}'`);
+    await root.query(`ALTER USER '${escapeLiteral(user)}'@'${escapeLiteral(host)}' IDENTIFIED BY '${password}'`);
+    await root.query(`GRANT ALL PRIVILEGES ON \`${database}\`.* TO '${escapeLiteral(user)}'@'${escapeLiteral(host)}'`);
   }
   await root.query('FLUSH PRIVILEGES');
   await root.end();
@@ -44,6 +51,7 @@ async function main() {
     password: config.db.password,
     database,
     multipleStatements: true,
+    ssl: config.db.ssl,
     timezone: '+08:00',
   });
 

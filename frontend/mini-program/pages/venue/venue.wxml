@@ -3,6 +3,12 @@
 
   <block wx:else>
     <view class="card">
+      <image
+        wx:if="{{resource.imageUrl}}"
+        class="venue-cover"
+        src="{{resource.imageUrl}}"
+        mode="aspectFill"
+      />
       <view class="between">
         <view class="title">{{resource.name}}</view>
         <view class="tag tag-blue">{{resource.typeLabel}}</view>

@@ -321,7 +321,7 @@ async function assertCheckInPermission(executor, actor, booking, method) {
   throw new AppError(403, ErrorCodes.FORBIDDEN, '只能签到本人的预约');
 }
 
-export async function checkIn(actor, { bookingId, qrToken, method = 'QR' }) {
+export async function checkIn(actor, { bookingId, qrToken, method = 'QR', photoUrl = null }) {
   let row = null;
   if (qrToken) {
     const [rows] = await pool.query(`${BOOKING_SELECT} WHERE b.qr_token = ? LIMIT 1`, [qrToken]);
@@ -361,9 +361,9 @@ export async function checkIn(actor, { bookingId, qrToken, method = 'QR' }) {
       throw new AppError(409, ErrorCodes.INVALID_STATE, '预约状态已变化，请刷新后重试');
     }
     await connection.query(
-      `INSERT INTO checkins (booking_id, method, operator_id, checked_in_at)
-       VALUES (?, ?, ?, NOW())`,
-      [row.id, method, method === 'ASSISTED' ? actor.id : null],
+      `INSERT INTO checkins (booking_id, method, operator_id, checked_in_at, photo_url)
+       VALUES (?, ?, ?, NOW(), ?)`,
+      [row.id, method, method === 'ASSISTED' ? actor.id : null, photoUrl || null],
     );
     await writeLog(connection, {
       actorId: actor.id,

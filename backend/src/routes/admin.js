@@ -35,6 +35,8 @@ const resourceSchema = z.object({
   openTo: z.string().regex(TIME_PATTERN, '开放时间格式应为 HH:mm'),
   status: z.enum(['OPEN', 'CLOSED']).default('OPEN'),
   description: z.string().max(255).optional().nullable(),
+  // 由 /api/uploads 返回的 URL；只存 URL，不接收二进制
+  imageUrl: z.string().trim().max(500).optional().nullable(),
 });
 
 const maintenanceSchema = z.object({
@@ -52,6 +54,10 @@ const userUpdateSchema = z.object({
 const reviewSchema = z.object({
   decision: z.enum(['APPROVE', 'REJECT']),
   reason: z.string().max(255).optional(),
+});
+
+const assistedCheckinSchema = z.object({
+  photoUrl: z.string().max(500).optional().nullable(),
 });
 
 const appealHandleSchema = z.object({
@@ -158,9 +164,9 @@ router.post('/resources', requireRole('COLLEGE_ADMIN'), validate(resourceSchema)
   }
   const [result] = await pool.query(
     `INSERT INTO resources
-       (name, type, building, room, capacity, open_from, open_to, status, description)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [body.name, body.type, body.building, body.room, body.capacity, openFrom, openTo, body.status, body.description || null],
+       (name, type, building, room, capacity, open_from, open_to, status, description, image_url)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [body.name, body.type, body.building, body.room, body.capacity, openFrom, openTo, body.status, body.description || null, body.imageUrl || null],
   );
   await writeLog(pool, {
     actorId: req.user.id,
@@ -185,9 +191,9 @@ router.put('/resources/:id', validate(resourceSchema), asyncHandler(async (req, 
   const [result] = await pool.query(
     `UPDATE resources
         SET name = ?, type = ?, building = ?, room = ?, capacity = ?,
-            open_from = ?, open_to = ?, status = ?, description = ?
+            open_from = ?, open_to = ?, status = ?, description = ?, image_url = ?
       WHERE id = ?`,
-    [body.name, body.type, body.building, body.room, body.capacity, openFrom, openTo, body.status, body.description || null, req.params.id],
+    [body.name, body.type, body.building, body.room, body.capacity, openFrom, openTo, body.status, body.description || null, body.imageUrl || null, req.params.id],
   );
   if (result.affectedRows === 0) {
     throw new AppError(404, ErrorCodes.NOT_FOUND, '场地不存在');
@@ -408,10 +414,11 @@ router.post('/bookings/:id/review', validate(reviewSchema), asyncHandler(async (
   res.json({ booking });
 }));
 
-router.post('/bookings/:id/assisted-checkin', asyncHandler(async (req, res) => {
+router.post('/bookings/:id/assisted-checkin', validate(assistedCheckinSchema), asyncHandler(async (req, res) => {
   const booking = await checkIn(req.user, {
     bookingId: req.params.id,
     method: 'ASSISTED',
+    photoUrl: req.body.photoUrl,
   });
   res.json({ booking });
 }));

@@ -1,0 +1,35 @@
+# Render 免费 Web Service 部署描述（无云服务器时的备选方案）
+# 使用：Render Dashboard → New → Blueprint → 选择本仓库
+# 数据库建议用 Aiven/TiDB Cloud 免费 MySQL，把连接信息填进下面的环境变量。
+services:
+  - type: web
+    name: zhiyue-api
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerContext: .
+    dockerfilePath: ./deploy/backend.Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TZ
+        value: Asia/Shanghai
+      - key: JWT_SECRET
+        sync: false
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_NAME
+        value: zhiyue
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: STORAGE_DRIVER
+        value: local
+      - key: STORAGE_PUBLIC_BASE_URL
+        sync: false

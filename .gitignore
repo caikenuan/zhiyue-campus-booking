@@ -12,6 +12,12 @@ database/data/
 frontend/mini-program/project.private.config.json
 frontend/mini-program/.wechat/
 ~$*
+# 本地上传的图片（对象存储/本地驱动）
+backend/uploads/
+# 证书续期验证文件
+deploy/certbot/www/*
+!deploy/certbot/www/.gitkeep
+
 # 本地课程材料，不提交到仓库
 /*.pptx
 /*.docx

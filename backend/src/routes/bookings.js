@@ -32,6 +32,11 @@ const renewSchema = z.object({
 
 const checkinSchema = z.object({
   qrToken: z.string().min(1),
+  photoUrl: z.string().max(500).optional().nullable(),
+});
+
+const checkinPhotoSchema = z.object({
+  photoUrl: z.string().max(500).optional().nullable(),
 });
 
 router.get('/mine', asyncHandler(async (req, res) => {
@@ -47,6 +52,7 @@ router.post('/checkin', validate(checkinSchema), asyncHandler(async (req, res) =
   const booking = await checkIn(req.user, {
     qrToken: req.body.qrToken,
     method: 'QR',
+    photoUrl: req.body.photoUrl,
   });
   res.json({ booking });
 }));
@@ -86,10 +92,11 @@ router.post('/:id/renew', validate(renewSchema), asyncHandler(async (req, res) =
   res.status(201).json({ booking });
 }));
 
-router.post('/:id/checkin', asyncHandler(async (req, res) => {
+router.post('/:id/checkin', validate(checkinPhotoSchema), asyncHandler(async (req, res) => {
   const booking = await checkIn(req.user, {
     bookingId: req.params.id,
     method: 'QR',
+    photoUrl: req.body.photoUrl,
   });
   res.json({ booking });
 }));

@@ -1,0 +1,14 @@
+.git
+.gitignore
+.tools
+**/node_modules
+**/dist
+docs
+database
+scripts
+*.docx
+*.pdf
+*.pptx
+*.log
+.env
+.env.local

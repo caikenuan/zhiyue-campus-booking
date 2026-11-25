@@ -10,6 +10,7 @@ export const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  ssl: config.db.ssl,
   timezone: '+08:00',
   dateStrings: true,
   decimalNumbers: true,

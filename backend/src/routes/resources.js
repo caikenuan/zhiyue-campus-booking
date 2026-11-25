@@ -30,6 +30,7 @@ export function mapResource(resource) {
     openTo: String(resource.open_to).slice(0, 5),
     status: resource.status,
     description: resource.description,
+    imageUrl: resource.image_url || null,
   };
 }
 

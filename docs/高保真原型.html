@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>智约 · 高保真原型</title>
+<style>
+@page { size: A4; margin: 10mm; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#4F46E5;--primary-d:#3730A3;--primary-l:#EEF2FF;
+  --success:#10B981;--success-l:#ECFDF5;--warn:#F59E0B;--warn-l:#FFFBEB;
+  --danger:#EF4444;--danger-l:#FEF2F2;--info:#0EA5E9;--info-l:#F0F9FF;
+  --ink:#1E293B;--ink2:#475569;--ink3:#94A3B8;--line:#E2E8F0;--bg:#F1F5F9;--card:#fff;
+  --sh:0 3px 12px rgba(15,23,42,.08);--sh2:0 8px 24px rgba(15,23,42,.12);
+}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:var(--ink);background:#fff;font-size:12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.cover{text-align:center;padding:18px 0 10px;border-bottom:2px solid var(--line);margin-bottom:14px}
+.cover h1{font-size:26px;letter-spacing:1px;background:linear-gradient(90deg,#4F46E5,#0EA5E9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover p{font-size:12px;color:var(--ink2);margin-top:6px}
+.badges{margin-top:8px}
+.badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:20px;margin:0 3px;background:var(--primary-l);color:var(--primary);border:1px solid #c7d2fe}
+.sec{font-size:16px;font-weight:700;margin:18px 0 12px;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--primary-l),#f8fafc);border-left:4px solid var(--primary)}
+.pb{page-break-before:always;break-before:page}
+.ic{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.sm{width:11px;height:11px}.ic.lg{width:18px;height:18px}
+
+/* ============ 手机 ============ */
+.phones{display:flex;flex-wrap:wrap;gap:18px;justify-content:flex-start}
+.phone{width:212px;flex:none}
+.phone-shell{border:7px solid #1e293b;border-radius:30px;overflow:hidden;background:#fff;box-shadow:var(--sh2)}
+.screen{height:404px;background:#f8fafc;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.status{height:22px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:9px;font-weight:600;color:var(--ink)}
+.status .dots{letter-spacing:1px}
+.nav{height:34px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-bottom:1px solid #f1f5f9;flex:none}
+.nav .t{font-size:12px;font-weight:700}.nav .side{width:20px;color:var(--ink2);display:flex;align-items:center}
+.nav .side.r{justify-content:flex-end}
+.body{flex:1;overflow:hidden;padding:8px 9px}
+.tabbar{height:40px;background:#fff;border-top:1px solid var(--line);display:flex;flex:none}
+.tabbar .tb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:8px;color:var(--ink3)}
+.tabbar .tb.on{color:var(--primary);font-weight:600}
+.cap{text-align:center;font-size:10px;font-weight:600;margin-top:7px;color:var(--ink2)}
+.cap b{color:var(--primary)}
+
+.card{background:#fff;border-radius:10px;padding:8px;box-shadow:var(--sh);margin-bottom:7px;border:1px solid #f1f5f9}
+.row{display:flex;align-items:center;gap:6px}
+.between{display:flex;align-items:center;justify-content:space-between}
+.muted{color:var(--ink3);font-size:9px}
+.tiny{font-size:9px}
+.bold{font-weight:700}
+.tag{display:inline-block;font-size:8px;padding:2px 6px;border-radius:5px;background:#f1f5f9;color:var(--ink2)}
+.tag.g{background:var(--success-l);color:var(--success)}
+.tag.o{background:var(--warn-l);color:var(--warn)}
+.tag.r{background:var(--danger-l);color:var(--danger)}
+.tag.b{background:var(--primary-l);color:var(--primary)}
+.btn{background:var(--primary);color:#fff;border-radius:9px;text-align:center;padding:8px;font-size:11px;font-weight:600;box-shadow:0 3px 8px rgba(79,70,229,.3)}
+.btn.ghost{background:#fff;color:var(--primary);border:1px solid var(--primary);box-shadow:none}
+.input{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:9px;color:var(--ink3)}
+.chip{padding:5px 9px;border-radius:16px;background:#fff;border:1px solid var(--line);font-size:9px;white-space:nowrap}
+.chip.on{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+.av{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#a5b4fc,#6366f1);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;flex:none}
+.venueimg{width:46px;height:46px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700}
+.slot{padding:4px 0;border-radius:6px;text-align:center;font-size:8px}
+.slot.free{background:var(--success-l);color:var(--success);border:1px solid #a7f3d0}
+.slot.sel{background:var(--primary);color:#fff;font-weight:700}
+.slot.busy{background:#f1f5f9;color:var(--ink3);text-decoration:line-through}
+.slot.maint{background:var(--warn-l);color:var(--warn)}
+.grid6{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.progress{height:5px;background:#eef2ff;border-radius:4px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#6366f1,#0ea5e9);border-radius:4px}
+.ai-card{background:linear-gradient(135deg,#eef2ff,#f0f9ff);border:1px solid #c7d2fe;border-radius:10px;padding:8px;margin-bottom:7px}
+.timeline{border-left:2px solid var(--line);margin-left:6px;padding-left:10px}
+.tl-item{position:relative;padding-bottom:9px}
+.tl-item:before{content:"";position:absolute;left:-14px;top:2px;width:7px;height:7px;border-radius:50%;background:var(--primary);border:2px solid #fff}
+.line{height:1px;background:var(--line);margin:6px 0}
+
+/* ============ 管理端 ============ */
+.admin{border:1px solid var(--line);border-radius:9px;overflow:hidden;box-shadow:var(--sh);margin-bottom:16px;background:#fff}
+.admin-top{height:24px;background:#1e293b;color:#cbd5e1;display:flex;align-items:center;padding:0 10px;font-size:9px;gap:4px}
+.admin-top .d{width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block}
+.admin-top .d2{background:#f59e0b}.admin-top .d3{background:#10b981}
+.admin-bar{height:28px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:10px}
+.admin-bar .who{display:flex;align-items:center;gap:6px}
+.admin-bar .who .av{width:18px;height:18px;border-radius:50%;font-size:8px;background:var(--primary)}
+.admin-main{display:flex;min-height:236px}
+.side{width:112px;background:#f8fafc;border-right:1px solid var(--line);padding:7px 6px;flex:none}
+.brand{font-size:11px;font-weight:800;color:var(--primary);margin-bottom:8px;display:flex;align-items:center;gap:4px}
+.menu{font-size:8.5px;padding:5px 6px;border-radius:6px;color:var(--ink2);display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.menu.on{background:var(--primary);color:#fff;font-weight:600}
+.content{flex:1;padding:9px 11px;min-width:0}
+.content h3{font-size:12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:9px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px;box-shadow:var(--sh)}
+.stat .n{font-size:15px;font-weight:800;color:var(--ink)}
+.stat .l{font-size:8px;color:var(--ink3);margin-top:2px}
+.stat .p{font-size:8px;margin-top:3px}
+.stat.a{background:linear-gradient(135deg,#eef2ff,#fff)}.stat.a .n{color:var(--primary)}
+table.data{width:100%;border-collapse:collapse;font-size:8.5px}
+table.data th{background:#f8fafc;color:var(--ink2);font-weight:600;text-align:left;padding:5px 6px;border-bottom:1px solid var(--line)}
+table.data td{padding:5px 6px;border-bottom:1px solid #f1f5f9;color:var(--ink2)}
+table.data tr:last-child td{border-bottom:none}
+.pill{display:inline-block;font-size:7.5px;padding:2px 6px;border-radius:10px;font-weight:600}
+.pill.g{background:var(--success-l);color:var(--success)}.pill.b{background:var(--primary-l);color:var(--primary)}
+.pill.o{background:var(--warn-l);color:var(--warn)}.pill.r{background:var(--danger-l);color:var(--danger)}
+.tool{display:flex;gap:5px;margin-bottom:7px;align-items:center}
+.tool .search{border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:8px;color:var(--ink3);flex:1;background:#fff}
+.tool .add{background:var(--primary);color:#fff;border-radius:6px;padding:4px 9px;font-size:8px;font-weight:600;display:flex;align-items:center;gap:3px}
+.chart{display:flex;align-items:flex-end;gap:6px;height:68px;padding:4px 0;border-bottom:1px solid var(--line)}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%}
+.chart .bar{width:70%;background:linear-gradient(180deg,#6366f1,#a5b4fc);border-radius:3px 3px 0 0}
+.chart .bar.a{background:linear-gradient(180deg,#0ea5e9,#7dd3fc)}
+.chart .lb{font-size:7px;color:var(--ink3)}
+.legend{display:flex;gap:10px;font-size:8px;color:var(--ink2);margin-top:5px}
+.legend i{display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--primary);margin-right:3px}
+.legend i.b{background:var(--info)}
+.donut{width:66px;height:66px;border-radius:50%;background:conic-gradient(#4f46e5 0 62%,#10b981 62% 84%,#f59e0b 84% 100%);display:flex;align-items:center;justify-content:center}
+.donut i{width:42px;height:42px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;font-style:normal}
+.drawer{position:absolute;right:0;top:0;bottom:0;width:44%;background:#fff;border-left:1px solid var(--line);box-shadow:-4px 0 16px rgba(15,23,42,.1);padding:9px;z-index:5;font-size:8.5px}
+.rel{position:relative}
+.flow{font-size:10px;line-height:1.9;background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.flow b{color:var(--primary)}
+.note{font-size:9px;color:var(--ink2);margin:6px 0;line-height:1.6}
+.two{display:flex;gap:14px;flex-wrap:wrap}
+.two>*{flex:1;min-width:300px}
+</style>
+</head>
+<body>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></symbol>
+<symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+<symbol id="i-log" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+<symbol id="i-setting" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a7 7 0 0 0-1.7-1L14.5 3h-4l-.3 2.9a7 7 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 1.7 1l.3 2.9h4l.3-2.9a7 7 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5a7 7 0 0 0 .1-1z"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 9a7 7 0 0 1 12-2l2 5M18 15a7 7 0 0 1-12 2l-2-5"/></symbol>
+</svg>
+
+<div class="cover">
+  <h1>「智约」校园共享空间预约平台 · 高保真原型</h1>
+  <p>专业基础实践 · 作业一　|　学生端 6 页 + 管理端 6 模块 + 仪表盘/AI 助手等扩展界面　|　V1.0</p>
+  <div class="badges"><span class="badge">灰盒→视觉稿</span><span class="badge">含状态与数据</span><span class="badge">含跳转关系</span><span class="badge">含辅助签到</span></div>
+</div>
+
+<div class="sec">A　学生端 · 微信小程序（核心 6 页）</div>
+<div class="phones">
+
+<!-- P1 空档查询 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">空档查询</div><div class="side r"><svg class="ic"><use href="#i-bell"/></svg></div></div>
+  <div class="body">
+    <div class="input row" style="gap:5px"><svg class="ic sm"><use href="#i-search"/></svg> 搜索场地名称 / 位置</div>
+    <div class="row" style="gap:5px;margin:7px 0;overflow:hidden">
+      <span class="chip">今天<br><b>11/21</b></span><span class="chip on">明天<br><b>11/22</b></span><span class="chip">周六<br><b>11/23</b></span><span class="chip">周日<br><b>11/24</b></span>
+    </div>
+    <div class="row" style="gap:5px;margin-bottom:7px"><span class="chip on">全部</span><span class="chip">研讨室</span><span class="chip">自习位</span><span class="chip">活动室</span><svg class="ic sm" style="color:var(--primary)"><use href="#i-filter"/></svg></div>
+    <div class="ai-card row" style="gap:6px"><div class="av" style="background:linear-gradient(135deg,#8b5cf6,#0ea5e9)"><svg class="ic sm"><use href="#i-spark"/></svg></div><div><div class="bold tiny">AI 找位助手</div><div class="muted">试试："明天下午，2 人，安静点"</div></div></div>
+    <div class="card">
+      <div class="row" style="gap:7px"><div class="venueimg" style="background:linear-gradient(135deg,#6366f1,#a5b4fc)">A-301</div><div style="flex:1"><div class="bold tiny">研讨室 A-301</div><div class="muted">图书馆 3F · 可容纳 8 人</div><div class="row" style="gap:3px;margin-top:2px"><span class="tag g">★ 4.8</span><span class="tag">研讨室</span><span class="tag">白板</span></div></div></div>
+      <div class="line"></div><div class="muted" style="margin-bottom:3px">可预约时段（30 分钟粒度）</div>
+      <div class="grid6"><span class="slot free">10:00</span><span class="slot free">10:30</span><span class="slot free">11:00</span><span class="slot maint">12:00 维护</span><span class="slot busy">14:00</span><span class="slot free">15:00</span></div>
+    </div>
+    <div class="card row" style="gap:7px"><div class="venueimg" style="background:linear-gradient(135deg,#0ea5e9,#7dd3fc)">B-102</div><div style="flex:1"><div class="bold tiny">自习位 B-102</div><div class="muted">教学楼 B · 靠窗 · 4 人</div><div class="row" style="gap:3px;margin-top:2px"><span class="tag g">★ 4.6</span><span class="tag">安静</span></div></div><span class="tag b">有空位</span></div>
+  </div>
+  <div class="tabbar"><div class="tb"><svg class="ic"><use href="#i-home"/></svg>首页</div><div class="tb on"><svg class="ic"><use href="#i-search"/></svg>空档</div><div class="tb"><svg class="ic"><use href="#i-cal"/></svg>预约</div><div class="tb"><svg class="ic"><use href="#i-user"/></svg>我的</div></div>
+</div></div><div class="cap"><b>P1</b>　空档查询</div></div>
+
+<!-- P2 预约下单 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">确认预约</div><div class="side r"></div></div>
+  <div class="body">
+    <div class="card row" style="gap:7px"><div class="venueimg" style="background:linear-gradient(135deg,#6366f1,#a5b4fc)">A-301</div><div><div class="bold tiny">研讨室 A-301</div><div class="muted">图书馆 3F · 8 人</div></div></div>
+    <div class="card"><div class="between"><span class="bold tiny">选择日期</span><span class="tag b">提前 1 天窗口内</span></div><div class="row" style="gap:5px;margin-top:6px"><span class="chip">今天</span><span class="chip on">明天 11/22</span><span class="chip">后天(不可约)</span></div></div>
+    <div class="card"><div class="between"><span class="bold tiny">选择时段</span><span class="muted">30 分钟粒度</span></div>
+      <div class="grid4" style="margin-top:6px"><span class="slot free">13:00</span><span class="slot free">13:30</span><span class="slot free">14:00</span><span class="slot busy">14:30</span><span class="slot sel">15:00</span><span class="slot sel">15:30</span><span class="slot free">16:00</span><span class="slot maint">16:30 维护</span></div>
+      <div class="muted" style="margin-top:5px">已选：<b style="color:var(--primary)">15:00 — 16:00（60 分钟）</b></div>
+    </div>
+    <div class="card"><div class="between"><span class="muted">使用人数</span><span class="tiny bold">2 人 − ＋</span></div><div class="line"></div><div class="between"><span class="muted">用途</span><span class="tiny">小组讨论 ▾</span></div></div>
+    <div class="ai-card tiny" style="line-height:1.6"><b>校验通过</b>：粒度✓ 时长✓ 窗口✓ 冲突✓ 跨天✓ 维护✓ 停权✓</div>
+  </div>
+  <div style="padding:7px 9px;background:#fff;border-top:1px solid var(--line)"><div class="btn">提交预约</div></div>
+</div></div><div class="cap"><b>P2</b>　预约下单</div></div>
+
+<!-- P3 扫码签到 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">扫码签到</div><div class="side r"><svg class="ic"><use href="#i-log"/></svg></div></div>
+  <div class="body">
+    <div class="card" style="text-align:center;padding:12px 8px">
+      <div style="width:120px;height:120px;margin:0 auto;border:2px dashed var(--primary);border-radius:12px;background:linear-gradient(135deg,#eef2ff,#f0f9ff);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+        <svg class="ic lg" style="width:34px;height:34px;color:var(--primary)"><use href="#i-scan"/></svg><span class="muted">将二维码放入框内</span>
+      </div>
+      <div class="muted" style="margin-top:8px">自动扫描 · 需在开始后 15 分钟内</div>
+    </div>
+    <div class="card"><div class="tiny bold" style="margin-bottom:5px">当前预约</div><div class="between"><span class="muted">研讨室 A-301</span><span class="tag b">待签到</span></div><div class="between"><span class="muted">11-22 15:00—16:00</span><span class="tag o">剩余 08:12</span></div></div>
+    <div class="card" style="background:var(--success-l);border-color:#a7f3d0"><div class="row" style="gap:6px;color:var(--success)"><svg class="ic"><use href="#i-check"/></svg><b class="tiny">签到成功 · 使用中</b></div><div class="muted" style="margin-top:4px">状态 CHECKED_IN，结束请再次扫码</div></div>
+    <div class="btn ghost row" style="justify-content:center;gap:5px"><svg class="ic sm"><use href="#i-bell"/></svg>二维码故障？联系管理员辅助签到</div>
+  </div>
+  <div class="tabbar"><div class="tb"><svg class="ic"><use href="#i-home"/></svg>首页</div><div class="tb"><svg class="ic"><use href="#i-search"/></svg>空档</div><div class="tb on"><svg class="ic"><use href="#i-scan"/></svg>签到</div><div class="tb"><svg class="ic"><use href="#i-user"/></svg>我的</div></div>
+</div></div><div class="cap"><b>P3</b>　扫码签到</div></div>
+
+</div><!-- /phones -->
+<div class="pb"></div>
+<div class="sec" style="font-size:13px">A（续）　学生端 · 我的预约 / 取消申诉 / 信用分</div>
+<div class="phones"><!-- reopen -->
+
+<!-- P4 我的预约 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"></div><div class="t">我的预约</div><div class="side r"><svg class="ic"><use href="#i-menu"/></svg></div></div>
+  <div class="body">
+    <div class="row" style="gap:5px;margin-bottom:7px"><span class="chip on">全部</span><span class="chip">待签到 2</span><span class="chip">使用中</span><span class="chip">已完成</span><span class="chip">已释放</span></div>
+    <div class="card"><div class="between"><span class="bold tiny">研讨室 A-301</span><span class="pill b">待签到</span></div><div class="muted" style="margin:4px 0">11-22（明天）15:00—16:00</div><div class="row" style="gap:4px"><span class="tag">ZY…22001</span><span class="tag g">已确认</span></div><div class="row" style="gap:5px;margin-top:6px"><div class="btn ghost" style="flex:1;padding:5px">取消</div><div class="btn" style="flex:1;padding:5px">去签到</div></div></div>
+    <div class="card"><div class="between"><span class="bold tiny">自习位 B-102</span><span class="pill g">使用中</span></div><div class="muted" style="margin:4px 0">11-21（今天）14:00—15:00</div><div class="row" style="gap:5px;margin-top:6px"><div class="btn ghost" style="flex:1;padding:5px">结束使用</div><div class="btn" style="flex:1;padding:5px">续约下一时段</div></div></div>
+    <div class="card"><div class="between"><span class="bold tiny">活动室 C-201</span><span class="pill o">已完成</span></div><div class="muted" style="margin:4px 0">11-20 09:00—10:00</div><div class="row" style="gap:4px;margin-top:4px"><span class="tag g">★ 准时履约</span></div></div>
+    <div class="card"><div class="between"><span class="bold tiny">研讨室 A-302</span><span class="pill r">已释放</span></div><div class="muted">11-18 超时未签到 · 记 1 次爽约</div></div>
+  </div>
+  <div class="tabbar"><div class="tb"><svg class="ic"><use href="#i-home"/></svg>首页</div><div class="tb"><svg class="ic"><use href="#i-search"/></svg>空档</div><div class="tb"><svg class="ic"><use href="#i-cal"/></svg>预约</div><div class="tb on"><svg class="ic"><use href="#i-user"/></svg>我的</div></div>
+</div></div><div class="cap"><b>P4</b>　我的预约</div></div>
+
+<!-- P5 取消与申诉 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">取消与申诉</div><div class="side r"></div></div>
+  <div class="body">
+    <div class="card"><div class="between"><span class="bold tiny">研讨室 A-301</span><span class="tag b">ZY…22001</span></div><div class="muted" style="margin-top:4px">11-22 15:00—16:00</div></div>
+    <div class="card"><div class="bold tiny" style="margin-bottom:6px">取消原因</div><div class="row" style="gap:5px;flex-wrap:wrap"><span class="chip on">临时有事</span><span class="chip">行程冲突</span><span class="chip">身体不适</span><span class="chip">其他</span></div></div>
+    <div class="card"><div class="bold tiny" style="margin-bottom:5px">异常申诉</div><div class="input" style="height:44px;line-height:1.5">描述情况，如：已到场但二维码无法识别…</div><div class="row" style="gap:5px;margin-top:6px"><div class="btn ghost" style="padding:5px">＋ 上传凭证</div><span class="muted">支持图片，≤5MB</span></div></div>
+    <div class="card" style="background:var(--warn-l);border-color:#fde68a"><div class="tiny" style="line-height:1.6;color:#92400e"><b>提示：</b>预约已被自动释放的，不提供"补签到"，请提交异常申诉由管理员核实处理。</div></div>
+    <div class="btn">提交取消 / 申诉</div>
+  </div>
+</div></div><div class="cap"><b>P5</b>　取消与申诉</div></div>
+
+<!-- P6 信用分 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">我的信用</div><div class="side r"><svg class="ic"><use href="#i-log"/></svg></div></div>
+  <div class="body">
+    <div class="card" style="text-align:center;padding:10px"><div class="donut" style="margin:0 auto"><i>92</i></div><div class="bold tiny" style="margin-top:6px">信用优秀</div><div class="muted">近 30 天爽约 1 次 · 未停权</div></div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr);gap:5px"><div class="stat" style="padding:6px"><div class="n" style="font-size:13px">18</div><div class="l">履约次数</div></div><div class="stat" style="padding:6px"><div class="n" style="font-size:13px;color:var(--warn)">1</div><div class="l">爽约次数</div></div><div class="stat" style="padding:6px"><div class="n" style="font-size:13px">0</div><div class="l">停权天数</div></div></div>
+    <div class="card"><div class="bold tiny" style="margin-bottom:7px">信用记录</div><div class="timeline">
+      <div class="tl-item"><div class="bold tiny">履约完成 · 研讨室 A-301</div><div class="muted">11-20 10:00 +2 分</div></div>
+      <div class="tl-item"><div class="bold tiny" style="color:var(--danger)">爽约 · 研讨室 A-302</div><div class="muted">11-18 超时未签到 −8 分</div></div>
+      <div class="tl-item"><div class="bold tiny">履约完成 · 自习位 B-102</div><div class="muted">11-15 14:00 +2 分</div></div>
+    </div></div>
+    <div class="card" style="background:var(--primary-l);border-color:#c7d2fe"><div class="tiny" style="line-height:1.6;color:var(--primary-d)"><b>停权规则：</b>近 30 天累计 3 次爽约 → 停权 7 天，期间禁止提交预约。</div></div>
+  </div>
+</div></div><div class="cap"><b>P6</b>　信用分</div></div>
+
+</div>
+
+<div class="pb"></div>
+<div class="sec">B　学生端 · 扩展界面（AI 助手 / 续约 / 结果反馈）</div>
+<div class="phones">
+
+<!-- 扩展1 AI找位助手 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">AI 找位助手</div><div class="side r"><svg class="ic"><use href="#i-refresh"/></svg></div></div>
+  <div class="body" style="background:#f1f5f9">
+    <div class="card" style="margin-left:0"><div class="row" style="gap:5px"><div class="av" style="background:linear-gradient(135deg,#8b5cf6,#0ea5e9);width:22px;height:22px"><svg class="ic sm"><use href="#i-spark"/></svg></div><div class="muted tiny" style="background:#f1f5f9;padding:6px;border-radius:8px">你好，说说你的需求，我来帮你找位置。</div></div></div>
+    <div class="card" style="margin-left:36px;background:var(--primary);color:#fff"><div class="tiny">明天下午三点，两个人，安静点的地方</div></div>
+    <div class="card" style="margin-left:0"><div class="muted tiny" style="line-height:1.6">已识别：<b class="tag b">明天</b> <b class="tag b">15:00</b> <b class="tag b">2 人</b> <b class="tag b">安静</b><br>为你推荐 2 个空位：</div></div>
+    <div class="card" style="margin-left:0;padding:6px"><div class="row" style="gap:6px"><div class="venueimg" style="background:linear-gradient(135deg,#0ea5e9,#7dd3fc);width:38px;height:38px">B-102</div><div style="flex:1"><div class="bold tiny">自习位 B-102</div><div class="muted">靠窗 · 安静 · 15:00 可约</div></div><span class="tag g">匹配</span></div></div>
+    <div class="card" style="margin-left:0;padding:6px"><div class="row" style="gap:6px"><div class="venueimg" style="background:linear-gradient(135deg,#6366f1,#a5b4fc);width:38px;height:38px">A-305</div><div style="flex:1"><div class="bold tiny">研讨室 A-305</div><div class="muted">安静 · 15:30 可约</div></div><span class="tag g">匹配</span></div></div>
+    <div class="input row" style="gap:5px;background:#fff"><input style="border:none;outline:none;width:100%;font-size:9px" placeholder="继续追问，如：用多久？"> <svg class="ic sm" style="color:var(--primary)"><use href="#i-spark"/></svg></div>
+  </div>
+</div></div><div class="cap"><b>P7</b>　AI 找位助手（对话式）</div></div>
+
+<!-- 扩展2 续约 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="t">续约下一时段</div><div class="side r"></div></div>
+  <div class="body">
+    <div class="card"><div class="bold tiny" style="margin-bottom:5px">当前使用中</div><div class="between"><span class="muted">自习位 B-102</span><span class="pill g">使用中</span></div><div class="muted" style="margin-top:4px">11-21 14:00—15:00</div></div>
+    <div class="card"><div class="bold tiny" style="margin-bottom:5px">续约时段（紧邻原时段）</div><div class="grid4"><span class="slot sel">15:00</span><span class="slot sel">15:30</span><span class="slot free">16:00</span><span class="slot free">16:30</span></div><div class="muted" style="margin-top:5px">续约后连续使用：<b style="color:var(--primary)">14:00—16:00（2 小时）</b></div></div>
+    <div class="card" style="background:var(--info-l);border-color:#bae6fd"><div class="tiny" style="line-height:1.6;color:#075985"><b>续约规则：</b>后续时段无人预约时允许续约；每笔预约仍≤4 小时，连续使用总时长可超过 4 小时。</div></div>
+    <div class="card" style="background:var(--danger-l);border-color:#fecaca"><div class="tiny" style="line-height:1.6;color:#991b1b"><b>冲突提示：</b>若 16:00 已被他人预约，则该时段不可续约，返回 RENEW_CONFLICT。</div></div>
+    <div class="btn">确认续约</div>
+  </div>
+</div></div><div class="cap"><b>P8</b>　续约下一时段（扩展）</div></div>
+
+<!-- 扩展3 结果反馈 -->
+<div class="phone"><div class="phone-shell"><div class="screen">
+  <div class="status"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+  <div class="nav"><div class="side"></div><div class="t">预约结果</div><div class="side r"></div></div>
+  <div class="body" style="text-align:center;padding-top:26px">
+    <div style="width:56px;height:56px;border-radius:50%;background:var(--success-l);margin:0 auto;display:flex;align-items:center;justify-content:center"><svg class="ic lg" style="width:30px;height:30px;color:var(--success)"><use href="#i-check"/></svg></div>
+    <div class="bold" style="font-size:15px;margin-top:10px">预约成功</div>
+    <div class="muted" style="margin-top:3px">状态 PENDING · 请在开始前 15 分钟内签到</div>
+    <div class="card" style="text-align:left;margin-top:14px"><div class="between"><span class="muted">预约号</span><span class="bold tiny">ZY20261122001</span></div><div class="line"></div><div class="between"><span class="muted">场地</span><span class="bold tiny">研讨室 A-301</span></div><div class="line"></div><div class="between"><span class="muted">时段</span><span class="bold tiny">11-22 15:00—16:00</span></div></div>
+    <div class="btn" style="margin-top:4px">查看我的预约</div>
+  </div>
+</div></div><div class="cap"><b>P9</b>　预约成功反馈（扩展）</div></div>
+
+</div>
+
+<div class="sec">C　学生端跳转关系</div>
+<div class="flow">
+  空档查询 <b>→(选时段)</b> 预约下单 <b>→(提交成功)</b> 预约结果 <b>→</b> 我的预约<br>
+  我的预约 <b>→(待签到)</b> 扫码签到 <b>→(成功)</b> 我的预约；我的预约 <b>→(使用中)</b> 续约下一时段<br>
+  扫码签到 <b>→(二维码故障/联系管理员)</b> 异常申诉；空档查询 <b>→(AI 找位)</b> AI 助手 <b>→(推荐空位)</b> 预约下单<br>
+  我的预约 <b>→(取消/申诉)</b> 取消与申诉；我的/个人中心 <b>→</b> 信用分；辅助签到记录 <b>→</b> 管理端操作日志反查
+</div>
+
+<div class="pb"></div>
+<div class="sec">D　管理端 · Vue 3 后台（仪表盘 + 6 模块）</div>
+
+<!-- 仪表盘 -->
+<div class="admin">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 首页仪表盘 — 智约运营概览</span></div>
+  <div class="admin-bar"><div class="who"><span class="av">史</span><b>史曼琪</b><span class="muted">学院管理员</span></div><div class="row" style="gap:8px"><svg class="ic sm"><use href="#i-bell"/></svg><span class="muted">2026-11-21 10:32</span></div></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>运营概览 <span class="tag b">今日 11-21</span></h3>
+      <div class="stats">
+        <div class="stat a"><div class="n">128</div><div class="l">今日预约</div><div class="p" style="color:var(--success)">↑ 12%</div></div>
+        <div class="stat"><div class="n">36</div><div class="l">使用中</div><div class="p muted">实时</div></div>
+        <div class="stat"><div class="n" style="color:var(--danger)">3</div><div class="l">今日爽约</div><div class="p" style="color:var(--warn)">需关注</div></div>
+        <div class="stat"><div class="n">68%</div><div class="l">平均利用率</div><div class="p" style="color:var(--success)">↑ 5%</div></div>
+      </div>
+      <div class="two">
+        <div style="flex:1.4"><div class="bold tiny" style="margin-bottom:4px">近 7 日预约趋势</div>
+          <div class="chart"><div class="col"><div class="bar" style="height:45%"></div><span class="lb">15</span></div><div class="col"><div class="bar" style="height:62%"></div><span class="lb">16</span></div><div class="col"><div class="bar a" style="height:50%"></div><span class="lb">17</span></div><div class="col"><div class="bar" style="height:78%"></div><span class="lb">18</span></div><div class="col"><div class="bar" style="height:70%"></div><span class="lb">19</span></div><div class="col"><div class="bar a" style="height:88%"></div><span class="lb">20</span></div><div class="col"><div class="bar" style="height:82%"></div><span class="lb">21</span></div></div>
+          <div class="legend"><span><i></i>预约数</span><span><i class="b"></i>亮点日</span></div>
+        </div>
+        <div style="flex:1"><div class="bold tiny" style="margin-bottom:4px">场地使用占比</div><div class="row" style="gap:8px"><div class="donut"><i>62%</i></div><div class="tiny" style="line-height:1.7"><div><i style="display:inline-block;width:7px;height:7px;background:#4f46e5;border-radius:2px"></i> 研讨室 62%</div><div><i style="display:inline-block;width:7px;height:7px;background:#10b981;border-radius:2px"></i> 自习位 22%</div><div><i style="display:inline-block;width:7px;height:7px;background:#f59e0b;border-radius:2px"></i> 活动室 16%</div></div></div></div>
+      </div>
+      <div class="bold tiny" style="margin:8px 0 4px">最近预约</div>
+      <table class="data"><tr><th>预约号</th><th>用户</th><th>场地</th><th>时段</th><th>状态</th></tr><tr><td>ZY…22001</td><td>蔡珂暖</td><td>A-301</td><td>15:00-16:00</td><td><span class="pill b">待签到</span></td></tr><tr><td>ZY…21998</td><td>李同学</td><td>B-102</td><td>14:00-15:00</td><td><span class="pill g">使用中</span></td></tr></table>
+    </div>
+  </div>
+</div>
+
+<!-- 场地与时段 -->
+<div class="admin">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 场地与时段管理</span></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>场地与时段管理 <span class="tag">共 12 个场地</span></h3>
+      <div class="tool"><div class="search">🔍 搜索场地名称 / 位置</div><div class="menu" style="display:inline-flex;border:1px solid var(--line);padding:4px 8px;border-radius:6px">全部类型 ▾</div><div class="add"><svg class="ic sm"><use href="#i-plus"/></svg>新增场地</div></div>
+      <table class="data"><tr><th>场地</th><th>类型/位置</th><th>容量</th><th>开放时间</th><th>维护时段</th><th>状态</th><th>操作</th></tr>
+        <tr><td class="bold">A-301</td><td>研讨室 · 图书馆3F</td><td>8 人</td><td>08:00-22:00</td><td>12:00-13:00</td><td><span class="pill g">启用</span></td><td>编辑 · 时段</td></tr>
+        <tr><td class="bold">B-102</td><td>自习位 · 教学楼B</td><td>4 人</td><td>08:00-21:00</td><td>—</td><td><span class="pill g">启用</span></td><td>编辑 · 时段</td></tr>
+        <tr><td class="bold">C-201</td><td>活动室 · 活动中心</td><td>20 人</td><td>09:00-21:00</td><td>17:00-18:00</td><td><span class="pill o">维护中</span></td><td>编辑 · 时段</td></tr>
+        <tr><td class="bold">A-305</td><td>研讨室 · 图书馆3F</td><td>6 人</td><td>08:00-22:00</td><td>—</td><td><span class="pill g">启用</span></td><td>编辑 · 时段</td></tr>
+      </table>
+      <div class="note" style="margin-top:8px">维护时段由授权管理员设置；维护窗口内禁止预约（C-08）。时段设置检查合法性与重叠。</div>
+    </div>
+  </div>
+</div>
+
+<div class="pb"></div>
+
+<!-- 预约审批 + 辅助签到抽屉 -->
+<div class="admin rel">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 预约审批 → 预约详情 → 辅助签到</span></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>预约审批 <span class="tag o">3 条待处理</span></h3>
+      <div class="tool"><div class="search">🔍 预约号 / 用户 / 场地</div><div class="menu" style="display:inline-flex;border:1px solid var(--line);padding:4px 8px;border-radius:6px">状态筛选 ▾</div><div class="add" style="background:var(--success)"><svg class="ic sm"><use href="#i-check"/></svg>批量通过</div></div>
+      <table class="data"><tr><th>预约号</th><th>用户</th><th>场地</th><th>时段</th><th>状态</th><th>操作</th></tr>
+        <tr><td>ZY…22001</td><td>蔡珂暖</td><td>A-301</td><td>15:00-16:00</td><td><span class="pill b">待审批</span></td><td><b style="color:var(--primary)">详情</b></td></tr>
+        <tr><td>ZY…21999</td><td>王同学</td><td>C-201</td><td>10:00-12:00</td><td><span class="pill b">待审批</span></td><td><b style="color:var(--primary)">详情</b></td></tr>
+        <tr><td>ZY…21990</td><td>张同学</td><td>A-305</td><td>09:00-10:00</td><td><span class="pill o">申诉中</span></td><td><b style="color:var(--primary)">详情</b></td></tr>
+      </table>
+    </div>
+    <div class="drawer">
+      <div class="between" style="margin-bottom:6px"><b>预约详情 · ZY…22001</b><span style="color:var(--ink3)">✕</span></div>
+      <div class="line"></div>
+      <div class="between"><span class="muted">用户</span><span class="bold">蔡珂暖 · 20240302…</span></div>
+      <div class="between" style="margin-top:5px"><span class="muted">场地</span><span class="bold">研讨室 A-301</span></div>
+      <div class="between" style="margin-top:5px"><span class="muted">时段</span><span class="bold">11-22 15:00-16:00</span></div>
+      <div class="between" style="margin-top:5px"><span class="muted">状态</span><span class="pill b">待签到</span></div>
+      <div class="line" style="margin:8px 0"></div>
+      <div class="bold tiny" style="margin-bottom:5px;color:var(--primary)">管理员辅助签到（核实到场后）</div>
+      <div class="card" style="padding:6px;margin-bottom:6px"><div class="muted" style="line-height:1.6">核实事项：学生身份、实际到场、二维码故障原因<br>时间校验：开始后 &lt; 15min</div></div>
+      <div class="btn" style="padding:6px">✓ 确认辅助签到</div>
+      <div class="muted" style="margin-top:5px;line-height:1.5">通过：状态 CHECKED_IN，方式 ASSISTED，自动写操作日志。已自动释放则拒绝并转异常申诉。</div>
+    </div>
+  </div>
+</div>
+
+<div class="pb"></div>
+<!-- 用户与角色 -->
+<div class="admin">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 用户与角色</span></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>用户与角色 <span class="tag">学生 486 · 管理员 8</span></h3>
+      <div class="tool"><div class="search">🔍 姓名 / 学号</div><div class="menu" style="display:inline-flex;border:1px solid var(--line);padding:4px 8px;border-radius:6px">角色 ▾</div><div class="add"><svg class="ic sm"><use href="#i-plus"/></svg>新增用户</div></div>
+      <table class="data"><tr><th>姓名</th><th>学号</th><th>角色</th><th>手机号</th><th>状态</th><th>操作</th></tr>
+        <tr><td class="bold">史曼琪</td><td>2024030202107</td><td><span class="pill b">学院管理员</span></td><td>138****2107</td><td><span class="pill g">正常</span></td><td>编辑角色</td></tr>
+        <tr><td class="bold">蔡珂暖</td><td>2024030202003</td><td><span class="pill">学生</span></td><td>139****2003</td><td><span class="pill g">正常</span></td><td>编辑角色</td></tr>
+        <tr><td class="bold">李同学</td><td>20240301…</td><td><span class="pill o">场地管理员</span></td><td>137****0088</td><td><span class="pill g">正常</span></td><td>编辑角色</td></tr>
+        <tr><td class="bold">王同学</td><td>20240302…</td><td><span class="pill">学生</span></td><td>135****1234</td><td><span class="pill r">停权中</span></td><td>编辑角色</td></tr>
+      </table>
+      <div class="note" style="margin-top:8px">手机号默认脱敏（后四位），查看完整值需单独授权并留痕（权限矩阵：学生仅本人、场管本场地、院管全院）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 爽约名单 -->
+<div class="admin">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 爽约名单与停权</span></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>爽约名单 <span class="tag r">规则：近 30 天 3 次 → 停 7 天</span></h3>
+      <div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="stat"><div class="n">12</div><div class="l">近30天爽约人次</div></div><div class="stat"><div class="n" style="color:var(--danger)">2</div><div class="l">停权中用户</div></div><div class="stat"><div class="n">1</div><div class="l">待处理申诉</div></div></div>
+      <table class="data"><tr><th>用户</th><th>近30天爽约</th><th>明细</th><th>停权状态</th><th>申诉</th></tr>
+        <tr><td class="bold">王同学</td><td><b style="color:var(--danger)">3</b></td><td>11-18 / 11-15 / 11-10</td><td><span class="pill r">停至 11-28（7天）</span></td><td><b style="color:var(--primary)">处理</b></td></tr>
+        <tr><td class="bold">赵同学</td><td><b style="color:var(--warn)">2</b></td><td>11-19 / 11-12</td><td><span class="pill o">临界预警</span></td><td>—</td></tr>
+        <tr><td class="bold">蔡珂暖</td><td>1</td><td>11-18</td><td><span class="pill g">正常</span></td><td>—</td></tr>
+      </table>
+      <div class="note" style="margin-top:8px">申诉通过可撤销相应爽约记录并解除停权；所有操作写入操作日志。</div>
+    </div>
+  </div>
+</div>
+
+<div class="pb"></div>
+<!-- 利用率统计 -->
+<div class="admin">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 利用率统计</span></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>利用率统计 <span class="tag b">日期 11-01 ~ 11-30</span></h3>
+      <div class="tool"><div class="search">📅 日期范围</div><div class="menu" style="display:inline-flex;border:1px solid var(--line);padding:4px 8px;border-radius:6px">场地范围：全部 ▾</div><div class="add" style="background:var(--info)">导出报表</div></div>
+      <div class="two">
+        <div style="flex:1.3"><div class="bold tiny" style="margin-bottom:4px">各场地预约数量</div>
+          <div class="chart"><div class="col"><div class="bar" style="height:80%"></div><span class="lb">A-301</span></div><div class="col"><div class="bar a" style="height:55%"></div><span class="lb">B-102</span></div><div class="col"><div class="bar" style="height:65%"></div><span class="lb">C-201</span></div><div class="col"><div class="bar" style="height:40%"></div><span class="lb">A-305</span></div><div class="col"><div class="bar a" style="height:72%"></div><span class="lb">A-302</span></div></div>
+        </div>
+        <div style="flex:1"><div class="bold tiny" style="margin-bottom:4px">利用率概览</div><table class="data"><tr><th>场地</th><th>预约数</th><th>使用时长</th><th>利用率</th></tr><tr><td>A-301</td><td>48</td><td>62h</td><td><span class="pill g">68%</span></td></tr><tr><td>B-102</td><td>31</td><td>38h</td><td><span class="pill b">54%</span></td></tr><tr><td>C-201</td><td>22</td><td>30h</td><td><span class="pill o">42%</span></td></tr></table></div>
+      </div>
+      <div class="note" style="margin-top:8px">口径：利用率 = 实际使用时长 ÷ 可开放时长；排除已取消与已释放记录。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 操作日志 -->
+<div class="admin">
+  <div class="admin-top"><span class="d"></span><span class="d d2"></span><span class="d d3"></span><span style="margin-left:8px">管理后台 / 操作日志（只读）</span></div>
+  <div class="admin-main">
+    <div class="side"><div class="brand"><svg class="ic"><use href="#i-spark"/></svg>智约管理</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>仪表盘</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-home"/></svg>场地与时段</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-cal"/></svg>预约审批</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-user"/></svg>用户与角色</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-shield"/></svg>爽约名单</div>
+      <div class="menu"><svg class="ic sm"><use href="#i-chart"/></svg>利用率统计</div>
+      <div class="menu on"><svg class="ic sm"><use href="#i-log"/></svg>操作日志</div>
+    </div>
+    <div class="content">
+      <h3>操作日志 <span class="tag r">不可修改 · 不可删除</span></h3>
+      <div class="tool"><div class="search">🔍 操作人 / 类型 / 时间</div><div class="menu" style="display:inline-flex;border:1px solid var(--line);padding:4px 8px;border-radius:6px">操作类型 ▾</div></div>
+      <table class="data"><tr><th>操作人</th><th>操作类型</th><th>对象</th><th>详情</th><th>时间</th></tr>
+        <tr><td class="bold">史曼琪</td><td><span class="pill b">辅助签到</span></td><td>蔡珂暖 / ZY…001</td><td>核实到场，方式 ASSISTED</td><td>11-22 10:05</td></tr>
+        <tr><td class="bold">史曼琪</td><td><span class="pill">设置维护</span></td><td>A-301</td><td>维护 12:00-13:00</td><td>11-20 16:30</td></tr>
+        <tr><td class="bold">李管理员</td><td><span class="pill o">审批通过</span></td><td>ZY…21980</td><td>特殊预约人工通过</td><td>11-20 09:12</td></tr>
+        <tr><td class="bold">史曼琪</td><td><span class="pill r">解除停权</span></td><td>赵同学</td><td>申诉通过，撤销爽约</td><td>11-19 14:20</td></tr>
+      </table>
+      <div class="note" style="margin-top:8px">辅助签到留痕要素：管理员、学生、时间、原因、预约编号（对应 TC-27）。</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">E　管理端跳转关系</div>
+<div class="flow">
+  管理员登录 <b>→</b> 仪表盘 <b>→</b>（侧边导航）场地与时段 / 预约审批 / 用户与角色 / 爽约名单 / 利用率统计 / 操作日志<br>
+  预约审批 <b>→(详情)</b> 预约详情抽屉 <b>→</b> 管理员辅助签到 <b>→(成功)</b> 写操作日志 <b>→</b> 操作日志可查询；申诉 <b>→</b> 爽约名单处理<br>
+  六模块之间均可经侧边导航互跳；所有操作受角色权限控制（本人/本场地/全院），关键操作强制留痕。
+</div>
+
+</body>
+</html>

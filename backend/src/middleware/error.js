@@ -19,6 +19,16 @@ export function errorHandler(error, _req, res, _next) {
     return;
   }
 
+  if (error?.name === 'MulterError') {
+    const message = error.code === 'LIMIT_FILE_SIZE'
+      ? '图片不能超过 5 MB'
+      : '图片上传失败，请检查文件';
+    res.status(400).json({
+      error: { code: ErrorCodes.VALIDATION_ERROR, message },
+    });
+    return;
+  }
+
   console.error('[unhandled error]', error);
   res.status(500).json({
     error: { code: 'INTERNAL_ERROR', message: '服务器内部错误' },

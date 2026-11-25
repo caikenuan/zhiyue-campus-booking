@@ -1,0 +1,68 @@
+# 完整 HTTPS 配置：证书申请成功后替换 deploy/nginx.conf 使用。
+# 使用前把两处 zhiyue.example.com 改成自己的已备案域名。
+upstream zhiyue_backend {
+    server backend:3000;
+    keepalive 32;
+}
+
+# HTTP 只保留证书续期验证，其余 301 到 HTTPS
+server {
+    listen 80;
+    server_name zhiyue.example.com;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name zhiyue.example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/zhiyue.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/zhiyue.example.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 1d;
+
+    root /usr/share/nginx/html;
+    index index.html;
+    client_max_body_size 8m;
+
+    location /api/ {
+        proxy_pass http://zhiyue_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 30s;
+    }
+
+    location /assets/ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location = /index.html {
+        add_header Cache-Control "no-store";
+    }
+
+    gzip on;
+    gzip_min_length 1024;
+    gzip_comp_level 5;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+}

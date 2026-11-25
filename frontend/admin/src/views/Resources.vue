@@ -17,6 +17,19 @@
       <el-table :data="resources" size="small">
         <el-table-column prop="id" label="ID" width="60" />
         <el-table-column prop="name" label="场地名称" min-width="150" />
+        <el-table-column label="图片" width="90">
+          <template #default="{ row }">
+            <el-image
+              v-if="row.imageUrl"
+              :src="row.imageUrl"
+              :preview-src-list="[row.imageUrl]"
+              preview-teleported
+              fit="cover"
+              style="width: 56px; height: 40px; border-radius: 4px"
+            />
+            <span v-else class="muted">—</span>
+          </template>
+        </el-table-column>
         <el-table-column label="类型" width="100">
           <template #default="{ row }">{{ row.typeLabel }}</template>
         </el-table-column>
@@ -73,6 +86,27 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="说明"><el-input v-model="form.description" type="textarea" :rows="2" /></el-form-item>
+        <el-form-item label="场地图片">
+          <div class="upload-row">
+            <el-upload
+              :show-file-list="false"
+              :http-request="uploadImage"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+            >
+              <el-image
+                v-if="form.imageUrl"
+                :src="form.imageUrl"
+                fit="cover"
+                style="width: 140px; height: 92px; border-radius: 6px"
+              />
+              <el-button v-else :icon="Upload">上传图片</el-button>
+            </el-upload>
+            <el-button v-if="form.imageUrl" text type="danger" @click="form.imageUrl = ''">
+              移除
+            </el-button>
+            <span class="muted upload-tip">jpg / png / webp，≤ 5 MB</span>
+          </div>
+        </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -126,7 +160,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Plus, Refresh } from '@element-plus/icons-vue';
+import { Plus, Refresh, Upload } from '@element-plus/icons-vue';
 import { api, errorMessage } from '../api';
 import { useAuthStore } from '../stores/auth';
 import { TYPE_LABELS } from '../constants';
@@ -157,6 +191,7 @@ function defaultForm() {
     openTo: '22:00',
     status: 'OPEN',
     description: '',
+    imageUrl: '',
   };
 }
 
@@ -194,8 +229,23 @@ function openEdit(row) {
     openTo: row.openTo,
     status: row.status,
     description: row.description || '',
+    imageUrl: row.imageUrl || '',
   });
   dialogVisible.value = true;
+}
+
+async function uploadImage(options) {
+  const payload = new FormData();
+  payload.append('file', options.file);
+  try {
+    const { data } = await api.post('/uploads', payload);
+    form.imageUrl = data.url;
+    ElMessage.success('图片已上传');
+    options.onSuccess?.(data);
+  } catch (error) {
+    ElMessage.error(errorMessage(error));
+    options.onError?.(error);
+  }
 }
 
 async function save() {
@@ -281,5 +331,15 @@ onMounted(load);
 <style scoped>
 .maintenance-form {
   margin-bottom: 8px;
+}
+
+.upload-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.upload-tip {
+  font-size: 12px;
 }
 </style>
