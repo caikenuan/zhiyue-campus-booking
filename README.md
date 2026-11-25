@@ -149,6 +149,7 @@ zhiyue-campus-booking/
 │   ├── 数据库设计说明.md / .docx # 表结构、索引、字段取值、并发设计
 │   ├── 部署文档.md              # 空服务器到公网访问的完整部署步骤
 │   ├── 免费部署方案.md          # 无服务器/无域名：Render + 免费 MySQL + Pages
+│   ├── 作业三进度与交接.md      # 当前进度、阻塞、网络实测与下次继续入口
 │   ├── 作业三分工与任务清单.md  # 集成发布阶段分工、差距与验收口径
 │   ├── ai-log.md / AI使用日志.docx # AI 使用日志（20 条）
 │   ├── 开发计划与分工.md
@@ -382,6 +383,7 @@ git clone https://github.com/caikenuan/zhiyue-campus-booking.git
 | [docs/部署文档.md](docs/部署文档.md) | 作业三：空服务器、Docker、HTTPS、云数据库、对象存储与小程序发布 |
 | [docs/免费部署方案.md](docs/免费部署方案.md) | 无服务器/无域名时：Render + Aiven 免费 MySQL + Cloudflare Pages + B2，含限制与记录单口径 |
 | [docs/作业三分工与任务清单.md](docs/作业三分工与任务清单.md) | 作业三现状差距、两人分工、时间安排与上线记录单证据对照 |
+| [docs/作业三进度与交接.md](docs/作业三进度与交接.md) | 当前进度、未完成项、网络实测、朋友服务器评估与下次继续步骤 |
 
 > Word 交付版统一放在 `docs/`，Markdown 源文件用于 GitHub 在线阅读和后续维护；仓库根目录只保留 `README.md` 和代码，避免重复文件。
 
